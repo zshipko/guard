@@ -2,10 +2,12 @@ open Unix
 open Sys
 
 let run_prog (prog : string) : bool =
+    try
     match system prog with
     | WEXITED n when n = sigint || n = sigkill -> false
     | WEXITED 127 -> false
     | _ -> true
+    with _ -> true
 
 let delay = ref 0.
 
